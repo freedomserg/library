@@ -5,12 +5,17 @@
 
     <!--bootstrap-->
     <bean id="bootstrap" class="net.freedomserg.projects.library.main.Bootstrap">
-
+        <property name="bookService" ref="bookService"/>
     </bean>
 
     <!--hBookDao-->
-    <bean id="hbookDao" class="net.freedomserg.projects.library.model.hibernate.HbookDao">
+    <bean id="hBookDao" class="net.freedomserg.projects.library.model.hibernate.HbookDao">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--bookService-->
+    <bean id="bookService" class="net.freedomserg.projects.library.service.BookService">
+        <property name="bookDao" ref="hBookDao"/>
     </bean>
 
 </beans>
