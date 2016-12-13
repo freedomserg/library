@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface BookDao {
 
-    Integer save(Book book);
+    Integer save(Book newBook);
 
-    void delete(Book book);
+    void delete(String bookName);
 
-    void update(Book book);
+    void update(Book book, String newBookName);
 
     Book loadById(int id);
 
-    Book load(Book book);
+    Book load(Book targetBook);
 
-    List<Book> loadByName(String name);
+    List<Book> loadByName(String bookName);
 
     List<Book> loadAll();
 }
