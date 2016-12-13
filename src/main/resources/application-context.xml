@@ -8,4 +8,9 @@
 
     </bean>
 
+    <!--hBookDao-->
+    <bean id="hbookDao" class="net.freedomserg.projects.library.model.hibernate.HbookDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>
