@@ -14,6 +14,8 @@ public interface BookDao {
 
     Book loadById(int id);
 
+    Book load(Book book);
+
     List<Book> loadByName(String name);
 
     List<Book> loadAll();
