@@ -2,7 +2,14 @@ package net.freedomserg.projects.library.exception;
 
 public class MoreThanOneBookToRemoveException extends LibraryException {
 
-    public MoreThanOneBookToRemoveException(String message) {
+    private String bookName;
+
+    public MoreThanOneBookToRemoveException(String message, String bookName) {
         super(message);
+        this.bookName = bookName;
+    }
+
+    public String getBookName() {
+        return bookName;
     }
 }
