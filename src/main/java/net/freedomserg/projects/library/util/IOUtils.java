@@ -1,4 +1,4 @@
-package net.freedomserg.projects.library.userInteraction;
+package net.freedomserg.projects.library.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

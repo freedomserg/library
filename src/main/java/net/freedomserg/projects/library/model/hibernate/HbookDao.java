@@ -1,6 +1,6 @@
 package net.freedomserg.projects.library.model.hibernate;
 
-import net.freedomserg.projects.library.exception.MoreThanOneBookToModifyException;
+import net.freedomserg.projects.library.exception.MoreThanOneBookToRemoveException;
 import net.freedomserg.projects.library.exception.NoSuchBookException;
 import net.freedomserg.projects.library.exception.SuchBookAlreadyExistsException;
 import net.freedomserg.projects.library.model.dao.BookDao;
@@ -27,7 +27,7 @@ public class HbookDao implements BookDao {
         try{
             Book target = load(newBook);
             throw new SuchBookAlreadyExistsException
-                    ("Such newBook already exists: " +
+                    ("Such newBook already exists in the library: " +
                             "id = " + target.getId() +
                             " bookName = " + target.getName() +
                             " author = " + target.getAuthor());
@@ -41,7 +41,7 @@ public class HbookDao implements BookDao {
     public void delete(String bookName) {
         List<Book> books = loadByName(bookName);
         if (books.size() > 1) {
-            throw new MoreThanOneBookToModifyException("More than one newBook for selected operation");
+            throw new MoreThanOneBookToRemoveException("More than one book with such name to remove", bookName);
         }
         sessionFactory.getCurrentSession().delete(books.get(0));
     }
@@ -82,7 +82,7 @@ public class HbookDao implements BookDao {
     @Transactional(propagation = Propagation.MANDATORY)
     public List<Book> loadByName(String bookName) {
         Query query = sessionFactory.getCurrentSession().createQuery
-                ("SELECT b FROm Book b WHERE b.name like :name");
+                ("SELECT b FROM Book b WHERE b.name like :name");
         query.setParameter("name", bookName);
         return query.getResultList();
     }
