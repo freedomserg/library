@@ -5,7 +5,6 @@
 
     <!--bootstrap-->
     <bean id="bootstrap" class="net.freedomserg.projects.library.main.Bootstrap">
-        <property name="bookService" ref="bookService"/>
     </bean>
 
     <!--hBookDao-->
@@ -16,6 +15,21 @@
     <!--bookService-->
     <bean id="bookService" class="net.freedomserg.projects.library.service.BookService">
         <property name="bookDao" ref="hBookDao"/>
+    </bean>
+
+    <!--addDbExecutor-->
+    <bean id="addDbExecutor" class="net.freedomserg.projects.library.dbExecutors.AddDbExecutor">
+        <property name="bookService" ref="bookService"/>
+    </bean>
+
+    <!--removeDbExecutor-->
+    <bean id="removeDbExecutor" class="net.freedomserg.projects.library.dbExecutors.RemoveDbExecutor">
+        <property name="bookService" ref="bookService"/>
+    </bean>
+
+    <!--getByNameDbExecutor-->
+    <bean id="getByNameDbExecutor" class="net.freedomserg.projects.library.dbExecutors.GetByNameDbExecutor">
+        <property name="bookService" ref="bookService"/>
     </bean>
 
 </beans>
