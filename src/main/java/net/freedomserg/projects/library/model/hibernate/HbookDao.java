@@ -48,6 +48,12 @@ public class HbookDao implements BookDao {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
+    public void delete(Book book) {
+        sessionFactory.getCurrentSession().delete(book);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void update(Book book, String newBookName) {
         book.setName(newBookName);
         sessionFactory.getCurrentSession().update(book);

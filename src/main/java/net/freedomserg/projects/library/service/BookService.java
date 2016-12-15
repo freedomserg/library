@@ -26,6 +26,11 @@ public class BookService {
     }
 
     @Transactional
+    public void remove(Book book) {
+        bookDao.delete(book);
+    }
+
+    @Transactional
     public void edit(Book book, String newBookName) {
         bookDao.update(book, newBookName);
     }

@@ -10,6 +10,8 @@ public interface BookDao {
 
     void delete(String bookName);
 
+    void delete(Book book);
+
     void update(Book book, String newBookName);
 
     Book loadById(int id);
