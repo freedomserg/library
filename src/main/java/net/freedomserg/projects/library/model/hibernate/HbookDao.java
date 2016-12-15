@@ -68,6 +68,12 @@ public class HbookDao implements BookDao {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
+    public void update(Book modifiedBook) {
+        sessionFactory.getCurrentSession().update(modifiedBook);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public Book loadById(int id) {
         return sessionFactory.getCurrentSession().load(Book.class, id);
     }

@@ -14,6 +14,8 @@ public interface BookDao {
 
     void update(String bookName, String newBookName);
 
+    void update(Book modifiedBook);
+
     Book loadById(int id);
 
     Book load(Book targetBook);

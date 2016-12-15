@@ -36,6 +36,11 @@ public class BookService {
     }
 
     @Transactional
+    public void edit(Book modifiedBook) {
+        bookDao.update(modifiedBook);
+    }
+
+    @Transactional
     public List<Book> getByName(String bookName) {
         return bookDao.loadByName(bookName);
     }
