@@ -31,8 +31,8 @@ public class BookService {
     }
 
     @Transactional
-    public void edit(Book book, String newBookName) {
-        bookDao.update(book, newBookName);
+    public void edit(String bookName, String newBookName) {
+        bookDao.update(bookName, newBookName);
     }
 
     @Transactional

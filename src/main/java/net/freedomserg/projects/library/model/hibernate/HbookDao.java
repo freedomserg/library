@@ -1,5 +1,6 @@
 package net.freedomserg.projects.library.model.hibernate;
 
+import net.freedomserg.projects.library.exception.MoreThanOneBookToEditException;
 import net.freedomserg.projects.library.exception.MoreThanOneBookToRemoveException;
 import net.freedomserg.projects.library.exception.NoSuchBookException;
 import net.freedomserg.projects.library.exception.SuchBookAlreadyExistsException;
@@ -54,7 +55,12 @@ public class HbookDao implements BookDao {
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public void update(Book book, String newBookName) {
+    public void update(String bookName, String newBookName) {
+        List<Book> books = loadByName(bookName);
+        if (books.size() > 1) {
+            throw new MoreThanOneBookToEditException("More than one book with such name to edit", bookName);
+        }
+        Book book = books.get(0);
         book.setName(newBookName);
         sessionFactory.getCurrentSession().update(book);
     }

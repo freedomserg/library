@@ -12,7 +12,7 @@ public interface BookDao {
 
     void delete(Book book);
 
-    void update(Book book, String newBookName);
+    void update(String bookName, String newBookName);
 
     Book loadById(int id);
 
