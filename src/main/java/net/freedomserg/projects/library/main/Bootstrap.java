@@ -1,6 +1,7 @@
 package net.freedomserg.projects.library.main;
 
 import net.freedomserg.projects.library.dbExecutors.GetByNameDbExecutor;
+import net.freedomserg.projects.library.dbExecutors.RemoveDbExecutor;
 import net.freedomserg.projects.library.exception.InvalidInputException;
 import net.freedomserg.projects.library.exception.MoreThanOneBookToRemoveException;
 import net.freedomserg.projects.library.exception.SuchBookAlreadyExistsException;
@@ -17,7 +18,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Bootstrap {
-    Logger logger = LoggerFactory.getLogger(Bootstrap.class);
+    private Logger logger = LoggerFactory.getLogger(Bootstrap.class);
+    private static ApplicationContext applicationContext;
 
     private static final String INIT_MESSAGE;
     private static final String FEW_BOOKS_MESSAGE;
@@ -35,13 +37,14 @@ public class Bootstrap {
         INIT_MESSAGE = builder.toString();
 
         builder = new StringBuilder();
-        builder.append("We have a few books with such name. Please choose one by typing a number of a book: \n");
+        builder.append("We have a few books with such name. Please choose one by typing a number of a book ");
+        builder.append("or type <cancel> to exit: \n");
         FEW_BOOKS_MESSAGE = builder.toString();
     }
 
 
     public static void main(String[] args) throws IOException {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml",
+        applicationContext = new ClassPathXmlApplicationContext("application-context.xml",
                 "hibernate-context.xml");
         Bootstrap bootstrap = applicationContext.getBean("bootstrap", Bootstrap.class);
         bootstrap.start();
@@ -62,24 +65,51 @@ public class Bootstrap {
                 logger.error(ex2.getMessage());
             }catch (MoreThanOneBookToRemoveException ex3) {
                 logger.error(ex3.getMessage());
-                String bookName = ex3.getBookName();
-                GetByNameDbExecutor dbExecutor = new GetByNameDbExecutor();
-                dbExecutor.setBookName(bookName);
-                dbExecutor.execute();
-                Map<Integer, Book> books = dbExecutor.getBooks();
-                IOUtils.printToConsole(FEW_BOOKS_MESSAGE);
-
-                for (Map.Entry<Integer, Book> entry : books.entrySet()) {
-                    IOUtils.printToConsole(entry.getKey() + " " + entry.getValue().toString());
-                }
-
-                Set<Integer> keySet = books.keySet();
-                input = IOUtils.getUserInput();
-                //proceed deleting operation
-
+                chooseBookAndRemove(ex3.getBookName());
 
             }
             input = IOUtils.getUserInput();
         }
+    }
+
+    private void chooseBookAndRemove(String bookName) throws IOException {
+        Map<Integer, Book> books = getBooks(bookName);
+        IOUtils.printToConsole(FEW_BOOKS_MESSAGE);
+        for (Map.Entry<Integer, Book> entry : books.entrySet()) {
+            IOUtils.printToConsole(entry.getKey() + " " + entry.getValue().toString());
+            IOUtils.printToConsole("\n");
+        }
+        String input = IOUtils.getUserInput();
+
+        Set<Integer> bookKeySet = books.keySet();
+        int selectedKey;
+        boolean validKeySelected = false;
+        while(!validKeySelected && !CANCEL.equals(input.trim().toLowerCase())) {
+            try {
+                selectedKey = Integer.parseInt(input);
+                if (bookKeySet.contains(selectedKey)) {
+                    validKeySelected = true;
+                    Book bookToBeRemoved = books.get(selectedKey);
+                    RemoveDbExecutor removeDbExecutor =
+                            applicationContext.getBean("removeDbExecutor", RemoveDbExecutor.class);
+                    removeDbExecutor.execute(bookToBeRemoved);
+                    IOUtils.printToConsole(DONE);
+                }else {
+                    logger.error("Invalid input. Try again.");
+                    input = IOUtils.getUserInput();
+                }
+            }catch (NumberFormatException ex4) {
+                logger.error("Invalid input. Try again.");
+                input = IOUtils.getUserInput();
+            }
+        }
+    }
+
+    private Map<Integer, Book> getBooks(String bookName) {
+        GetByNameDbExecutor getByNameDbExecutor =
+                applicationContext.getBean("getByNameDbExecutor", GetByNameDbExecutor.class);
+        getByNameDbExecutor.setBookName(bookName);
+        getByNameDbExecutor.execute();
+        return getByNameDbExecutor.getBooks();
     }
 }
