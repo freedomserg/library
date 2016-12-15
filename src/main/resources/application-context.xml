@@ -32,4 +32,9 @@
         <property name="bookService" ref="bookService"/>
     </bean>
 
+    <!--editDbExecutor-->
+    <bean id="editDbExecutor" class="net.freedomserg.projects.library.dbExecutors.EditDbExecutor">
+        <property name="bookService" ref="bookService"/>
+    </bean>
+
 </beans>
