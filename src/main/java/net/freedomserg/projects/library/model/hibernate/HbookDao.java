@@ -58,7 +58,8 @@ public class HbookDao implements BookDao {
     public void update(String bookName, String newBookName) {
         List<Book> books = loadByName(bookName);
         if (books.size() > 1) {
-            throw new MoreThanOneBookToEditException("More than one book with such name to edit", bookName);
+            throw new MoreThanOneBookToEditException
+                    ("More than one book with such name to edit", bookName, newBookName);
         }
         Book book = books.get(0);
         book.setName(newBookName);
