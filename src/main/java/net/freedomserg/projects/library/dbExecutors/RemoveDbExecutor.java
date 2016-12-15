@@ -1,6 +1,7 @@
 package net.freedomserg.projects.library.dbExecutors;
 
 import net.freedomserg.projects.library.exception.InvalidInputException;
+import net.freedomserg.projects.library.model.entity.Book;
 import net.freedomserg.projects.library.service.BookService;
 
 public class RemoveDbExecutor extends DbExecutor {
@@ -18,6 +19,10 @@ public class RemoveDbExecutor extends DbExecutor {
             throw new InvalidInputException("Invalid input. Try again.");
         }
         bookService.remove(bookName);
+    }
+
+    public void execute(Book book) {
+        bookService.remove(book);
     }
 
     private String retrieveBookName() {
