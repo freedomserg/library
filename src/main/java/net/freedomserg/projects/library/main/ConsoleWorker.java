@@ -48,23 +48,23 @@ public class ConsoleWorker {
             try {
                 DataProcessor.process(input);
                 IOUtils.printToConsole(DONE);
-            } catch (InvalidInputException ex1) {
-                System.err.println(ex1.getMessage());
+            } catch (InvalidInputException ex) {
+                System.out.println(ex.getMessage());
                 IOUtils.printToConsole(INIT_MESSAGE);
-            } catch (SuchBookAlreadyExistsException | NoSuchBookException ex2) {
-                System.err.println(ex2.getMessage());
-            }catch (MoreThanOneBookToRemoveException ex3) {
-                System.err.println(ex3.getMessage());
-                Book bookToBeRemoved = chooseBook(ex3.getBookName());
+            } catch (SuchBookAlreadyExistsException | NoSuchBookException ex) {
+                System.out.println(ex.getMessage());
+            }catch (MoreThanOneBookToRemoveException ex) {
+                System.out.println(ex.getMessage());
+                Book bookToBeRemoved = chooseBook(ex.getBookName());
                 if (bookToBeRemoved != null) {
                     removeBook(bookToBeRemoved);
                     IOUtils.printToConsole(DONE);
                 }
-            } catch (MoreThanOneBookToEditException ex4) {
-                System.err.println(ex4.getMessage());
-                Book bookToBeUpdated = chooseBook(ex4.getBookName());
+            } catch (MoreThanOneBookToEditException ex) {
+                System.out.println(ex.getMessage());
+                Book bookToBeUpdated = chooseBook(ex.getBookName());
                 if (bookToBeUpdated != null) {
-                    bookToBeUpdated.setName(ex4.getNewBookName());
+                    bookToBeUpdated.setName(ex.getNewBookName());
                     editBook(bookToBeUpdated);
                     IOUtils.printToConsole(DONE);
                 }
@@ -93,11 +93,11 @@ public class ConsoleWorker {
                     validKeySelected = true;
                     bookToBeRemoved = books.get(selectedKey);
                 } else {
-                    System.err.println("Invalid input. Try again.");
+                    System.out.println("Invalid input. Try again.");
                     input = IOUtils.getUserInput();
                 }
             } catch (NumberFormatException ex4) {
-                System.err.println("Invalid input. Try again.");
+                System.out.println("Invalid input. Try again.");
                 input = IOUtils.getUserInput();
             }
         }

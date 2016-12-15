@@ -14,8 +14,8 @@ public class EditDbExecutor extends DbExecutor {
 
     @Override
     public void execute() {
-        String bookName = retrieve();
-        String newBookName = retrieve();
+        String bookName = retrieveBookName();
+        String newBookName = retrieveBookName();
         if(!params.isEmpty()) {
             throw new InvalidInputException("Invalid input. Try again.");
         }
@@ -25,21 +25,4 @@ public class EditDbExecutor extends DbExecutor {
     public void execute(Book bookToBeUpdated) {
         bookService.edit(bookToBeUpdated);
     }
-
-    private String retrieve() {
-        StringBuilder builder = new StringBuilder();
-        String nextWord = params.peek();
-        if (nextWord == null || !nextWord.startsWith("\"")) {
-            throw new InvalidInputException("Invalid input. Try again.");
-        }
-        while(true) {
-            String nameUnit = params.poll();
-            builder.append(nameUnit).append(" ");
-            if (nameUnit.endsWith("\"")) {
-                break;
-            }
-        }
-        return builder.toString().trim();
-    }
-
 }

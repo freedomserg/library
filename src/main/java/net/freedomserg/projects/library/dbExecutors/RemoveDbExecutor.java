@@ -24,20 +24,4 @@ public class RemoveDbExecutor extends DbExecutor {
     public void execute(Book book) {
         bookService.remove(book);
     }
-
-    private String retrieveBookName() {
-        StringBuilder builder = new StringBuilder();
-        String nextWord = params.peek();
-        if (nextWord == null || !nextWord.startsWith("\"")) {
-            throw new InvalidInputException("Invalid input. Try again.");
-        }
-        while(true) {
-            String nameUnit = params.poll();
-            builder.append(nameUnit).append(" ");
-            if (nameUnit.endsWith("\"")) {
-                break;
-            }
-        }
-        return builder.toString().trim();
-    }
 }
