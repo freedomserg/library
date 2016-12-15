@@ -3,10 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--bootstrap-->
-    <bean id="bootstrap" class="net.freedomserg.projects.library.main.Bootstrap">
-    </bean>
-
     <!--hBookDao-->
     <bean id="hBookDao" class="net.freedomserg.projects.library.model.hibernate.HbookDao">
         <property name="sessionFactory" ref="sessionFactory"/>
