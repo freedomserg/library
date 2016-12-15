@@ -41,6 +41,9 @@ public class HbookDao implements BookDao {
     @Transactional(propagation = Propagation.MANDATORY)
     public void delete(String bookName) {
         List<Book> books = loadByName(bookName);
+        if (books.isEmpty()) {
+            throw new NoSuchBookException("No such book with name " + bookName);
+        }
         if (books.size() > 1) {
             throw new MoreThanOneBookToRemoveException("More than one book with such name to remove", bookName);
         }
@@ -57,6 +60,9 @@ public class HbookDao implements BookDao {
     @Transactional(propagation = Propagation.MANDATORY)
     public void update(String bookName, String newBookName) {
         List<Book> books = loadByName(bookName);
+        if (books.isEmpty()) {
+            throw new NoSuchBookException("No such book with name " + bookName);
+        }
         if (books.size() > 1) {
             throw new MoreThanOneBookToEditException
                     ("More than one book with such name to edit", bookName, newBookName);
