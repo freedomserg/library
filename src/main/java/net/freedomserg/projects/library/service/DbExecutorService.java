@@ -1,9 +1,6 @@
 package net.freedomserg.projects.library.service;
 
-import net.freedomserg.projects.library.dbExecutors.AddDbExecutor;
-import net.freedomserg.projects.library.dbExecutors.DbExecutor;
-import net.freedomserg.projects.library.dbExecutors.EditDbExecutor;
-import net.freedomserg.projects.library.dbExecutors.RemoveDbExecutor;
+import net.freedomserg.projects.library.dbExecutors.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -30,8 +27,11 @@ public class DbExecutorService {
                         applicationContext.getBean("editDbExecutor", EditDbExecutor.class);
                 editDbExecutor.setParams(params);
                 return editDbExecutor;
+            case "all":
+                GetAllDbExecutor getAllDbExecutor =
+                        applicationContext.getBean("getAllDbExecutor", GetAllDbExecutor.class);
+                return getAllDbExecutor;
         }
-
         return null;
     }
 }

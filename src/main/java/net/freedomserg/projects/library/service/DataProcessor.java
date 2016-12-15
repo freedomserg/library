@@ -7,7 +7,7 @@ import java.util.*;
 
 public class DataProcessor {
 
-    private static List<String> validOperations = new ArrayList<>(Arrays.asList("add", "remove", "edit", "all books"));
+    private static List<String> validOperations = new ArrayList<>(Arrays.asList("add", "remove", "edit", "all"));
 
     public static void process(String input) {
         String[] inputWords = input.split(" ");

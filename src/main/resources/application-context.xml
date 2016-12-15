@@ -37,4 +37,9 @@
         <property name="bookService" ref="bookService"/>
     </bean>
 
+    <!--getAllDbExecutor-->
+    <bean id="getAllDbExecutor" class="net.freedomserg.projects.library.dbExecutors.GetAllDbExecutor">
+        <property name="bookService" ref="bookService"/>
+    </bean>
+
 </beans>
