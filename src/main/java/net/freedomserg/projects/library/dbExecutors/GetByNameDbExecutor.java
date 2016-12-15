@@ -3,6 +3,7 @@ package net.freedomserg.projects.library.dbExecutors;
 import net.freedomserg.projects.library.model.entity.Book;
 import net.freedomserg.projects.library.service.BookService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ public class GetByNameDbExecutor extends DbExecutor {
 
     private BookService bookService;
     private String bookName;
-    private Map<Integer, Book> books;
+    private Map<Integer, Book> books = new HashMap<>();
 
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
