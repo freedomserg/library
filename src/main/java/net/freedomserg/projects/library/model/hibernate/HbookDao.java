@@ -109,6 +109,6 @@ public class HbookDao implements BookDao {
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public List<Book> loadAll() {
-        return sessionFactory.getCurrentSession().createQuery("SELECT b FROM Book b").list();
+        return sessionFactory.getCurrentSession().createQuery("SELECT b FROM Book b order by b.name").list();
     }
 }
